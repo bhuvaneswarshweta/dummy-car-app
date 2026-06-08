@@ -3,14 +3,19 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/tbhuvaneswar/dummay-car-app.git'
+                checkout scm
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
+            steps {
+                sh 'echo "Build started"'
+            }
+        }
+
+        stage('Docker Build') {
             steps {
                 sh 'docker build -t myapp:latest .'
             }
@@ -20,12 +25,6 @@ pipeline {
             steps {
                 sh 'docker images'
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline execution completed'
         }
     }
 }
